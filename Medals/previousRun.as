@@ -46,7 +46,7 @@ class Previous : UltimateMedalsExtended::IMedal {
         }
 
         if (MapData::validationMode && PreviousRun::session == uint(-1)) {return false;}
-        return this.validMedalTime && (!MedalsList::pb.enabled || this.GetMedalTime() != MedalsList::pb.cacheTime) && (!MedalsList::session.enabled || this.GetMedalTime() != MedalsList::session.cacheTime);
+        return this.validMedalTime && (MedalsList::pb is null || !MedalsList::pb.enabled || this.GetMedalTime() != MedalsList::pb.cacheTime) && (MedalsList::session is null || !MedalsList::session.enabled || this.GetMedalTime() != MedalsList::session.cacheTime);
     }
     uint GetMedalTime() override {
         return PreviousRun::previous;
@@ -105,7 +105,7 @@ class Session : UltimateMedalsExtended::IMedal {
         if (MapData::validationMode) {
             return this.validMedalTime && MapData::validated && (this.GetMedalTime() == uint(-1) || (MapData::highBetter ^^ this.GetMedalTime() > getMap().TMObjective_AuthorTime));
         }
-        return this.validMedalTime && (!MedalsList::pb.enabled || this.GetMedalTime() != MedalsList::pb.cacheTime);
+        return this.validMedalTime && (MedalsList::pb is null || !MedalsList::pb.enabled || this.GetMedalTime() != MedalsList::pb.cacheTime);
     }
     uint GetMedalTime() override {
         return PreviousRun::session;

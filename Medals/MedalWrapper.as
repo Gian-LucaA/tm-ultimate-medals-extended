@@ -30,6 +30,8 @@ class MedalWrapper {
         this.config = this.medal.GetConfig();
         if (this.config.defaultName == '') {
             throw('Medal Config must have a defaultName specified');
+        } else if (this.config.shareHidden && !this.config.shareIcon) {
+            throw('Invalid medal config - shareHidden may only be true when shareIcon is true');
         } else if ((this.config.usePreviousIcon || this.config.usePreviousColor || this.config.usePreviousOverlayIcon || this.config.usePreviousOverlayColor) && this.config.shareIcon) {
             warn('Medals using another icon should have sharing their icon disabled');
         }
@@ -41,7 +43,7 @@ class MedalWrapper {
 
     // called when loading a new map in case you aren't automatically starting your own api requests
     void onNewMap(const string &in uid) {
-        if (!this.enabled) {return;}
+        if (!this.shouldUpdate()) {return;}
         this.enabledMapCache = uid;
         this.medal.UpdateMedal(uid);
     }
@@ -51,11 +53,14 @@ class MedalWrapper {
             this.onNewMap(MapData::currentMap);
         }
     }
+    bool shouldUpdate() {
+        return this.enabled || this.config.shareHidden;
+    }
 
 
     // refresh function called to refresh medals, to check if sorting is needed, before each medal is then accessed in render
     void refreshMedal(const string &in uid) {
-        if (!this.enabled) {return;}
+        if (!this.shouldUpdate()) {return;}
         bool wasValidCache = this.validCacheTime;
         this.validCacheTime = this.medal.HasMedalTime(uid);
         if (this.validCacheTime) {
@@ -180,7 +185,7 @@ class MedalWrapper {
             const vec2 pos = UI::GetCursorPos();
             MedalWrapper@ previous = null;
             int i = MedalsList::Medals.Find(this);
-            while (i < int(MedalsList::Medals.Length) - 1 && (!MedalsList::Medals[i+1].config.shareIcon || !MedalsList::Medals[i+1].enabled || !MedalsList::Medals[i+1].hasMedalTime())) {
+            while (i < int(MedalsList::Medals.Length) - 1 && !(MedalsList::Medals[i+1].config.shareIcon && (MedalsList::Medals[i+1].enabled || MedalsList::Medals[i+1].config.shareHidden) && MedalsList::Medals[i+1].hasMedalTime())) {
                 i++;
             }
             if (i < int(MedalsList::Medals.Length) - 1) {

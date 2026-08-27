@@ -51,6 +51,14 @@ namespace UltimateMedalsExtended {
          */
         bool shareIcon = true;
 
+        /*
+         * if this medal should share its icon while hidden
+         * if this is true, shareIcon must also be true
+         * medals with this need to be updated while hidden, so should only be used on simple medals with no API requests
+         * this is used for ingame medals to make PB show which medal you have even if they are hidden
+         */
+        bool shareHidden = false;
+
         // if this medal can have an empty ('unset') but still visible value, using uint(-1), such as pb before first finish
         bool allowUnset = false;
 

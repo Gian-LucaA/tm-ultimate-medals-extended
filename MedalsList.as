@@ -98,7 +98,7 @@ namespace MedalsList {
     bool CheckRender() {
         bool visible = false;
         for (uint i = 0; i < Medals.Length; i++) {
-            if (Medals[i].enabled) {
+            if (Medals[i].shouldUpdate()) {
                 Medals[i].refreshMedal(MapData::currentMap);
                 if (Medals[i].enabled && Medals[i].hasMedalTime()) {
                     visible = true;

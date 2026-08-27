@@ -192,7 +192,7 @@ namespace MapData {
         PreviousRun::Update();
 #else
         if (validationMode ||
-            (MedalsList::session.enabled || MedalsList::previous.enabled)) {
+            (MedalsList::session.shouldUpdate() || MedalsList::previous.shouldUpdate())) {
                 PreviousRun::Update();
         }
 #endif
@@ -207,7 +207,7 @@ namespace MapData {
         _nextUpdate = Time::Now + 500;
 #endif
 
-        if (MedalsList::pb is null || !MedalsList::pb.enabled) {return;}
+        if (MedalsList::pb is null || !MedalsList::pb.shouldUpdate()) {return;}
 
         if (showReplayEditor && replay !is null) {
             // replay editor doesn't load until after first entering map, so pb needs to re-detect that it is now invalid
