@@ -161,9 +161,9 @@ class MedalWrapper {
             color = '\\$77f';
         }
         if (this.cacheTime < pbTime) {
-            return color + '+' + this.formatTime(pbTime - this.cacheTime);
+            return color + (invertDelta ? '\u2212' : '+') + this.formatTime(pbTime - this.cacheTime);
         } else if (this.cacheTime > pbTime) {
-            return color + '\u2212' + this.formatTime(this.cacheTime - pbTime);
+            return color + (invertDelta ? '+' : '\u2212') + this.formatTime(this.cacheTime - pbTime);
         } else {
             return color + '\u2007' + this.formatTime(0);
         }

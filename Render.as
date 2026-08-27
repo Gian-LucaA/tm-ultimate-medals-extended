@@ -36,6 +36,9 @@ bool showMedalNameColors = true;
 [Setting category="Window" name="Show delta time"]
 bool showDelta = true;
 
+[Setting category="Window" name="Invert delta +/−"]
+bool invertDelta = false;
+
 [Setting category="Window" name="Name length limit" description="Width in pixels of displayed name length. 0 is disabled"]
 uint scrollMapName = 275;
 
