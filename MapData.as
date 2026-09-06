@@ -29,7 +29,7 @@ namespace MapData {
         CGameCtnApp@ app = GetApp();
         gamemode = GameMode::None;
         string gm = cast<CTrackManiaNetworkServerInfo@>(app.Network.ServerInfo).CurGameModeStr;
-        if (gm.Contains('Race') || gm.Contains('Obstacle')) {
+        if (gm.Contains('Race') || gm.Contains('Obstacle') || gm == 'TM_PlayMap_Local') {
             gamemode = GameMode::Race;
 #if TMNEXT
             if (IsClones(app.RootMap)) {
