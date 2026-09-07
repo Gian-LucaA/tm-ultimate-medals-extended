@@ -5,7 +5,7 @@ class AutoGoldMedal : DefaultMedal {
         c.defaultName = 'Auto Gold';
         c.icon = '\\$db4' + Icons::CircleO;
         c.shareIcon = false;
-        c.sortPriority = 73;
+        c.sortPriority = 72;
         return c;
     }
 
@@ -35,7 +35,7 @@ class AutoSilverMedal : DefaultMedal {
         c.defaultName = 'Auto Silver';
         c.icon = '\\$899' + Icons::CircleO;
         c.shareIcon = false;
-        c.sortPriority = 73;
+        c.sortPriority = 71;
         c.startEnabled = false;
         return c;
     }
@@ -66,7 +66,7 @@ class AutoBronzeMedal : DefaultMedal {
         c.defaultName = 'Auto Bronze';
         c.icon = '\\$964' + Icons::CircleO;
         c.shareIcon = false;
-        c.sortPriority = 73;
+        c.sortPriority = 70;
         c.startEnabled = false;
         return c;
     }

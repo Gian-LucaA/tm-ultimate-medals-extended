@@ -5,6 +5,7 @@ class SuperTrackmasterMedal : Medal {
         UltimateMedalsExtended::Config c;
         c.defaultName = 'Super Trackmaster';
         c.icon = '\\$0ff' + Icons::Circle;
+        c.sortPriority = 67;
         c.shareHidden = true;
         return c;
     }
@@ -33,6 +34,7 @@ class SuperGoldMedal : Medal {
         c.defaultName = 'Super Gold';
         c.icon = '\\$db4' + Icons::Circle;
         c.iconOverlay = '\\$0f1' + Icons::CircleO;
+        c.sortPriority = 66;
         c.shareHidden = true;
         return c;
     }
@@ -61,6 +63,7 @@ class SuperSilverMedal : Medal {
         c.defaultName = 'Super Silver';
         c.icon = '\\$899' + Icons::Circle;
         c.iconOverlay = '\\$0f1' + Icons::CircleO;
+        c.sortPriority = 65;
         c.shareHidden = true;
         return c;
     }
@@ -89,6 +92,7 @@ class SuperBronzeMedal : Medal {
         c.defaultName = 'Super Bronze';
         c.icon = '\\$964' + Icons::Circle;
         c.iconOverlay = '\\$0f1' + Icons::CircleO;
+        c.sortPriority = 64;
         c.shareHidden = true;
         return c;
     }
@@ -152,6 +156,7 @@ class GoldMedal : Medal {
         UltimateMedalsExtended::Config c;
         c.defaultName = 'Gold';
         c.icon = '\\$db4' + Icons::Circle;
+        c.sortPriority = 62;
         c.shareHidden = true;
         return c;
     }
@@ -177,6 +182,7 @@ class SilverMedal : Medal {
         UltimateMedalsExtended::Config c;
         c.defaultName = 'Silver';
         c.icon = '\\$899' + Icons::Circle;
+        c.sortPriority = 61;
         c.shareHidden = true;
         return c;
     }
@@ -202,6 +208,7 @@ class BronzeMedal : Medal {
         UltimateMedalsExtended::Config c;
         c.defaultName = 'Bronze';
         c.icon = '\\$964' + Icons::Circle;
+        c.sortPriority = 60;
         c.shareHidden = true;
         return c;
     }

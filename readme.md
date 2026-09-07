@@ -4,22 +4,30 @@
 Unlike Ultimate Medals, (which only shows ingame medals) and Ultimate Medals++ (which has to code in any extra medals it shows), Ultimate Medals Extended is designed so that each medal plugin can add a medal to it. This way, it can automatically support any new medal plugin that is created.
 
 ### Builtin medals:
-- Personal Best
-- Author
-- Gold
-- Silver
-- Bronze
-- Default Gold
-- Default Silver (disabled)
-- Default Bronze (disabled)
-- Session best (disabled)
-- Previous run (disabled)
+- Personal Best (127)
+- Author/Trackmaster (*63*)
+- Gold (62)
+- Silver (61)
+- Bronze (60)
+- Super Trackmaster (67)
+- Super Gold (66)
+- Super Silver (65)
+- Super Bronze (64)
+- Default Gold (72)
+- Default Silver (71) (disabled)
+- Default Bronze (70) (disabled)
+- Session best (126) (disabled)
+- Previous run (125) (disabled)
 ### Supporting plugins:
-- Champion Medals
-- Warrior Medals
-- Extra Leaderboard Positions
-- Copium
+- Champion Medals (*63*) (https://gitlab.com/naninf/champion-medals)
+- Warrior Medals (*63*) (https://github.com/ezio416/tm-warrior-medals)
+- Extra Leaderboard Positions (191-) (https://github.com/Banalian/ExtraLeaderboardPositions)
+- Copium (*63*, *63*, *63*) (https://github.com/ezio416/tm-copium)
+- s314ke Medals (*63*) (https://github.com/Mattynator0/s314keMedals)
+- Glacial Medals (*63*) (https://github.com/Mattynator0/GlacialMedals)
+- Validation Medal (for UME) (66, 65)
 
+numbers mentioned with medals are sort priority if times are equal
 
 ## Exports
 To use Ultimate Medals Extended as a dependency, you need to define a class implementing the `UltimateMedalsExtended::IMedal` interface
@@ -29,9 +37,8 @@ You must ensure that you remove medals when `OnDestroyed` is called, using `Ulti
 
 
 ### Example usage as a dependency
-In this example, the value of `exampleMedal` is set inside example medal plugin and is 0 when not avaliable.  
-And it uses an internal variable `currentUID` for the map it has current example medal data for  
-Note that 
+In this example, the value of `exampleMedal` would be set elsewhere inside example medal plugin and is 0 when not avaliable.  
+And it uses an internal variable `currentUID` for the map it has current example medal data for.  
 
 ```
 #if DEPENDENCY_ULTIMATEMEDALSEXTENDED

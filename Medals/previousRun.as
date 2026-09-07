@@ -59,7 +59,7 @@ class Session : UltimateMedalsExtended::IMedal {
         c.defaultName = 'Session';
         c.icon = '\\$444' + Icons::ClockO;
         c.nameColor = '\\$8ff';
-        c.sortPriority = 127;
+        c.sortPriority = 126;
         c.usePreviousColor = true;
         c.shareIcon = false;
         c.allowUnset = true;
