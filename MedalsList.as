@@ -114,11 +114,20 @@ namespace MedalsList {
 
     void Render() {
 
+        for (uint i = 0; i < Medals.Length; i++) {
+            if (Medals[i].enabled && Medals[i].hasMedalTime()) {
+                MapData::RequestPercentage(Medals[i].getMedalTime());
+            }
+        }
+
         int numcols = 2;
         if (showMedalNames) {
             numcols++;
         }
         if (showDelta) {
+            numcols++;
+        }
+        if (MapData::HasPlayerPercentages()) {
             numcols++;
         }
         if (UI::BeginTable("medals", numcols, UI::TableFlags::SizingFixedFit)) {
@@ -141,6 +150,10 @@ namespace MedalsList {
                 if (showDelta && pb.hasMedalTime()) {
                     UI::TableNextColumn();
                     UI::Text("Delta");
+                }
+                if (MapData::HasPlayerPercentages()) {
+                    UI::TableNextColumn();
+                    UI::Text("Players");
                 }
             }
             for (uint i = 0; i < Medals.Length; i++) {

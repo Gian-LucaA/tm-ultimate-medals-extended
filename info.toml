@@ -3,6 +3,7 @@ name = "Ultimate Medals Extended"
 author = "ArEyeses"
 category = "Race"
 version = "1.9"
+siteid = 734
 
 [script]
 module = "UltimateMedalsExtended"

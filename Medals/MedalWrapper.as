@@ -258,6 +258,10 @@ class MedalWrapper {
             UI::TableNextColumn();
             UI::Text(this.formatDelta());
         }
+        if (MapData::HasPlayerPercentages()) {
+            UI::TableNextColumn();
+            UI::Text(MapData::GetPlayerPercentage(this.cacheTime));
+        }
     }
 
     void RenderSettings() final {

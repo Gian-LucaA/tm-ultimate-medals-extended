@@ -21,6 +21,99 @@ namespace MapData {
     bool hasLoadedReplayEditor = false;
     bool validated = false;
 
+    uint playerCount = 0;
+    bool hasPlayerCount = false;
+    bool hasPlayerPercentages = false;
+    dictionary requestedPercentages;
+    dictionary playerPercentages;
+
+    Net::HttpRequest@ RequestMapMonitor(const string &in uid, uint time) {
+        auto request = Net::HttpRequest("https://map-monitor.xk.io/map/" + uid + "/" + tostring(time) + "/refresh");
+        await(request.Start());
+        if (uid != currentMap) {
+            return null;
+        }
+        if (request.ResponseCode() == 200) {
+            try {
+                auto json = request.Json();
+                auto top = json["tops"][0]["top"][0];
+                uint score = uint(top["score"]);
+                if (score > 0 && score < 999999999 && uint(top["position"]) > 0) {
+                    return request;
+                }
+            } catch {
+                // Missing or hidden times cannot provide player percentages.
+            }
+        }
+        hasPlayerCount = false;
+        hasPlayerPercentages = false;
+        playerPercentages.DeleteAll();
+        return null;
+    }
+
+    void LoadPlayerCount(const string &in uid) {
+        auto request = RequestMapMonitor(uid, 999999999);
+        if (request is null) {
+            return;
+        }
+        try {
+            auto json = request.Json();
+            auto top = json["tops"][0]["top"][0];
+            uint count = uint(top["position"]);
+            uint score = uint(top["score"]);
+            if (count > 0 && score < 999999999) {
+                playerCount = count;
+                hasPlayerCount = true;
+            }
+        } catch {
+            warn("Could not read map monitor player count");
+        }
+    }
+
+    void RequestPercentage(uint time) {
+        if (!hasPlayerCount) {
+            return;
+        }
+        const string key = tostring(time);
+        if (requestedPercentages.Exists(key)) {
+            return;
+        }
+        requestedPercentages[key] = true;
+        startnew(LoadPercentage, currentMap + "|" + tostring(time));
+    }
+
+    void LoadPercentage(const string &in requestData) {
+        const uint separator = requestData.IndexOf('|');
+        const string uid = requestData.SubStr(0, separator);
+        const uint time = Text::ParseUInt(requestData.SubStr(separator + 1));
+        auto request = RequestMapMonitor(uid, time);
+        if (request is null || !hasPlayerCount) {
+            return;
+        }
+        try {
+            auto json = request.Json();
+            uint position = uint(json["tops"][0]["top"][0]["position"]);
+            if (position > 0 && position <= playerCount) {
+                playerPercentages[tostring(time)] = float(position) / float(playerCount) * 100.f;
+                hasPlayerPercentages = true;
+            }
+        } catch {
+            warn("Could not read map monitor percentage");
+        }
+    }
+
+    bool HasPlayerPercentages() {
+        return hasPlayerPercentages;
+    }
+
+    string GetPlayerPercentage(uint time) {
+        float percentage;
+        if (!playerPercentages.Get(tostring(time), percentage)) {
+            return '';
+        }
+        return Text::Format("%.1f%%", percentage);
+    }
+
 #if TURBO
     bool needCheckTurboPb = false;
 #endif
@@ -179,6 +272,12 @@ namespace MapData {
             updateValidated();
             PreviousRun::onNewMap();
             MedalsList::onNewMap(currentMap);
+            playerCount = 0;
+            hasPlayerCount = false;
+            hasPlayerPercentages = false;
+            requestedPercentages.DeleteAll();
+            playerPercentages.DeleteAll();
+            startnew(LoadPlayerCount, currentMap);
         } else if (gamemode == GameMode::Puzzle && MedalsList::author.getMedalTime() == uint(-1) && map.TMObjective_AuthorTime != uint(-1)) {
             // puzzle script takes a moment to set medals it seems? Or they're wrong for one frame on loading in
             updateValidated();
