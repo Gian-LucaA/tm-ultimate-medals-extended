@@ -1,4 +1,4 @@
-> [!NOTE]  
+> [!IMPORTANT]  
 > Just vibe coded to test the idea.
 > It uses the API from this plugin: https://openplanet.dev/plugin/medalsdifficulty
 
